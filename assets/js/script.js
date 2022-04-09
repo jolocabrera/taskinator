@@ -232,22 +232,22 @@ var saveTasks = function() {
 // iterates through a tasks array and creates task elements on the page from it
 var loadTasks = function() {
     // get tasks from local storage
-    tasks = localStorage.getItem("tasks");
+    var savedTasks = localStorage.getItem("tasks");
 
-    //convert string to object
-    tasks = JSON.parse(tasks);
+    if (!savedTasks) {
+        tasks = [];
+        return false;
+    };
 
+    savedTasks = JSON.parse(savedTasks);
 
-    for (var i = 0; i < tasks.length; i++) {
-        tasks.id = taskIdCounter;
-        console.log(tasks[i]);
-        var listItemEl = document.createElement("li");
-        listItemEl.className = "task-item";
-        listItemEl.setAttribute("data-task-id", tasks[i].id);
-        console.log(listItemEl);
+    // loop through savedTasks array
+    for (var i = 0; i < savedTasks.length; i++) {
+        // pass each task object into the createTaskEl() function
+        createTaskEl(savedTasks[i]);
+    };
+
     }
-
-}
 
 loadTasks();
 
